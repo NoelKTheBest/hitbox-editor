@@ -1,0 +1,17 @@
+[gd_resource type="Animation" load_steps=2 format=3 uid="uid://7vbkgj3si84t"]
+
+[ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="1_3vtsk"]
+
+[resource]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [ExtResource("1_3vtsk"), ExtResource("1_3vtsk")]
+}
