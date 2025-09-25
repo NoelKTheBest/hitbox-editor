@@ -17,7 +17,7 @@ func _ready() -> void:
 	#texture_display.hf = hframes
 	#texture_display.vf = vframes
 	
-
+ 
 	frame = 4
 
 

@@ -2,12 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="1_pu8rq"]
 [ext_resource type="Script" path="res://test.gd" id="2_jem7c"]
-[ext_resource type="Script" path="res://test2.gd" id="3_4osv5"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="3_4osv5"]
 [ext_resource type="Script" path="res://test3.gd" id="4_qs2d3"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
 position = Vector2(280, 258)
 scale = Vector2(3, 3.002)
 texture = ExtResource("1_pu8rq")
