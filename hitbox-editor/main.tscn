@@ -7,6 +7,11 @@
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(807.736, 301.001)
+scale = Vector2(0.9, 0.9006)
+texture = ExtResource("1_pu8rq")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 clip_children = 2
 position = Vector2(280, 258)
@@ -29,6 +34,10 @@ position = Vector2(175.912, 14.324)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_pu8rq")
 script = ExtResource("4_qs2d3")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(175.912, 14.324)
+scale = Vector2(0.3, 0.3)
 
 [node name="FileDialog" type="FileDialog" parent="."]
 initial_position = 2
