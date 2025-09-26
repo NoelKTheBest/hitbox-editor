@@ -3,15 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="1_pu8rq"]
 [ext_resource type="Script" path="res://test.gd" id="2_jem7c"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="3_4osv5"]
-[ext_resource type="Script" path="res://test3.gd" id="4_qs2d3"]
+[ext_resource type="Script" path="res://frame_selection.gd" id="4_qs2d3"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(807.736, 301.001)
 scale = Vector2(0.9, 0.9006)
 texture = ExtResource("1_pu8rq")
+script = ExtResource("4_qs2d3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 clip_children = 2
@@ -32,10 +32,10 @@ script = ExtResource("3_4osv5")
 root_node = NodePath("../..")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+visible = false
 position = Vector2(175.912, 14.324)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_pu8rq")
-script = ExtResource("4_qs2d3")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 initial_position = 2

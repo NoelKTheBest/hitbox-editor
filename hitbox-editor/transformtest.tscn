@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://test4.gd" id="2_v5x3r"]
 
 [node name="Sprite2D" type="Sprite2D"]
+position = Vector2(97.8, 83.795)
 texture = ExtResource("1_jq1y7")
 hframes = 9
 frame = 3

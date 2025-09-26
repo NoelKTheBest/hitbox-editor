@@ -20,7 +20,7 @@ func _draw():
 
 
 func _input(event):
-	print(drag_mode)
+	#print(drag_mode)
 	
 	var box_pos : Vector2i
 	# we will have an array of boxes to use and 
@@ -29,7 +29,7 @@ func _input(event):
 	var current_box_id : int
 	var current_box_pos : Vector2i
 	
-	print(event)
+	#print(event)
 	
 	if event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
 		if get_rect().has_point(to_local(event.position)) and !drag_box:
