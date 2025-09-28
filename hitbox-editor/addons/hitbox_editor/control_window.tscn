@@ -15,8 +15,8 @@ script = ExtResource("1_bxg5m")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 384.0
-offset_bottom = 350.0
+offset_right = 345.0
+offset_bottom = 344.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -35,6 +35,19 @@ text = "Load"
 layout_mode = 2
 size_flags_vertical = 3
 text = "Save"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Hframes" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "     hframes:"
+
+[node name="Vframes" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+text = "     vframes:"
 
 [node name="Frame Selection" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -58,6 +71,10 @@ size_flags_vertical = 8
 position = Vector2(630, 150)
 texture = ExtResource("2_lmi6c")
 script = ExtResource("3_iqtqf")
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SpriteSheetControls"]
+layout_mode = 2
+text = "Current Frame"
 
 [node name="frame_select" type="SpinBox" parent="VBoxContainer/HBoxContainer/SpriteSheetControls"]
 layout_mode = 2
@@ -92,6 +109,10 @@ file_mode = 0
 [node name="CollisionBox" type="Sprite2D" parent="."]
 position = Vector2(750, 409)
 scale = Vector2(5, 5)
+
+[node name="Window" type="Window" parent="."]
+initial_position = 2
+size = Vector2i(400, 400)
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DialogButtons/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DialogButtons/save" to="VBoxContainer/HBoxContainer/SpriteSheetControls/Animations" method="_on_save_pressed"]

@@ -34,3 +34,9 @@ func _draw() -> void:
 	#print(texture_rect)
 	draw_texture_rect_region(texture,texture_rect, frame_rect)
 	
+
+
+func _on_h_slider_value_changed(value: float) -> void:
+	scale.x = value
+	scale.y = value
+	print(get_rect())

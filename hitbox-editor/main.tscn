@@ -1,22 +1,45 @@
-[gd_scene load_steps=5 format=3 uid="uid://bt4232u1rcll6"]
+[gd_scene load_steps=9 format=3 uid="uid://bt4232u1rcll6"]
 
 [ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="1_pu8rq"]
+[ext_resource type="Texture2D" uid="uid://cb7ncvek4444k" path="res://Warrior_Sheet-Effect.png" id="1_wl4l7"]
 [ext_resource type="Script" path="res://test.gd" id="2_jem7c"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="3_4osv5"]
 [ext_resource type="Script" path="res://frame_selection.gd" id="4_qs2d3"]
 
+[sub_resource type="SystemFont" id="SystemFont_5a0ns"]
+font_weight = 800
+
+[sub_resource type="Theme" id="Theme_qp762"]
+
+[sub_resource type="SystemFont" id="SystemFont_vmgju"]
+font_weight = 900
+hinting = 2
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
-position = Vector2(807.736, 301.001)
-scale = Vector2(0.9, 0.9006)
-texture = ExtResource("1_pu8rq")
+position = Vector2(877, 385)
+scale = Vector2(0.647067, 0.647499)
+texture = ExtResource("1_wl4l7")
 script = ExtResource("4_qs2d3")
+h = 6
+v = 17
+font = SubResource("SystemFont_5a0ns")
+
+[node name="HSlider" type="HSlider" parent="."]
+offset_left = 790.0
+offset_top = 60.0
+offset_right = 959.0
+offset_bottom = 88.0
+theme = SubResource("Theme_qp762")
+min_value = 1.0
+max_value = 5.0
+step = 0.01
+value = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-clip_children = 2
-position = Vector2(280, 258)
-scale = Vector2(3, 3.002)
+position = Vector2(251.165, 258)
+scale = Vector2(4.54, 4.545)
 texture = ExtResource("1_pu8rq")
 hframes = 7
 frame = 4
@@ -33,9 +56,12 @@ root_node = NodePath("../..")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
 visible = false
-position = Vector2(175.912, 14.324)
-scale = Vector2(0.3, 0.3)
+position = Vector2(109.927, -47.134)
+scale = Vector2(0.10187, 0.10187)
 texture = ExtResource("1_pu8rq")
+script = ExtResource("4_qs2d3")
+h = 7
+font = SubResource("SystemFont_vmgju")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 initial_position = 2
@@ -50,3 +76,5 @@ offset_bottom = 299.0
 item_count = 2
 item_0/text = "hello"
 item_1/text = "time"
+
+[connection signal="value_changed" from="HSlider" to="Sprite2D" method="_on_h_slider_value_changed"]
