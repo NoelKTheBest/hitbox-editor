@@ -1,0 +1,19 @@
+We will be creating a new scene with a Sprite2D node,
+an AnimationPlayer, and as many Area2D nodes as the animation
+requires. This will also allow users to copy and paste or
+instantiate these scenes in other scenes. 
+
+This method will save settings for only one animation 
+unfortunately. To get around this, I should keep the 
+current/editing scene in memory until I decide to save and
+load a new scene to work with. The extra container will 
+only be open for adding hitboxes to the current
+animation and once it's finished, it will go back to the main
+screen.
+
+In this main screen, I can load and/or select other 
+animations or even an animation library. If I load another
+library, that will effectively be it's own scene. The current
+"*unsaved" library will be part of it's own scene that will 
+keep getting updated with animations that have a hitbox or 
+hurtbox added to them.
