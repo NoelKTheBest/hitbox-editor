@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp38xo0la8hm6"]
+[gd_scene load_steps=10 format=3 uid="uid://dp38xo0la8hm6"]
 
 [ext_resource type="Script" path="res://addons/hitbox_editor/control_window.gd" id="1_bxg5m"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/savepopup.gd" id="2_e4lpr"]
 [ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="2_lmi6c"]
-[ext_resource type="Script" path="res://addons/hitbox_editor/load_sprite.gd" id="3_iqtqf"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/frame_selection.gd" id="3_lun56"]
+[ext_resource type="Texture2D" uid="uid://dtoroe0v3nqgi" path="res://icon.svg" id="5_42oq3"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="6_2cpr0"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/canvas_bg.gd" id="6_uoecn"]
+
+[sub_resource type="SystemFont" id="SystemFont_bcyo7"]
+
+[sub_resource type="Theme" id="Theme_wcshn"]
 
 [node name="ControlWindow" type="Control"]
 layout_mode = 3
@@ -13,88 +21,130 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bxg5m")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 345.0
-offset_bottom = 344.0
+offset_left = 25.0
+offset_right = 370.0
+offset_bottom = 564.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="DialogButtons" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="DialogButtons" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="load" type="Button" parent="VBoxContainer/HBoxContainer/DialogButtons"]
+[node name="load" type="Button" parent="MainContainer/HBoxContainer/DialogButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Load"
 
-[node name="save" type="Button" parent="VBoxContainer/HBoxContainer/DialogButtons"]
+[node name="PopupMenu" type="PopupMenu" parent="MainContainer/HBoxContainer/DialogButtons/load"]
+title = "Load Options"
+initial_position = 2
+size = Vector2i(330, 245)
+unresizable = false
+borderless = false
+extend_to_title = true
+item_count = 3
+item_0/text = "Load SpriteSheet"
+item_1/text = "Load Animation"
+item_1/id = 1
+item_2/text = "Load Animation Library"
+item_2/id = 2
+
+[node name="save" type="Button" parent="MainContainer/HBoxContainer/DialogButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Save"
+script = ExtResource("2_e4lpr")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="PopupMenu" type="PopupMenu" parent="MainContainer/HBoxContainer/DialogButtons/save"]
+title = "Save Options"
+initial_position = 2
+size = Vector2i(330, 245)
+unresizable = false
+borderless = false
+extend_to_title = true
+item_count = 2
+item_0/text = "Save Animation"
+item_1/text = "Save Library"
+item_1/id = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Hframes" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Hframes" type="Label" parent="MainContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
 text = "     hframes:"
 
-[node name="Vframes" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Vframes" type="Label" parent="MainContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 2
 text = "     vframes:"
 
-[node name="Frame Selection" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="Frame Selection" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="hframes_select" type="SpinBox" parent="VBoxContainer/HBoxContainer/Frame Selection"]
+[node name="hframes_select" type="SpinBox" parent="MainContainer/HBoxContainer/Frame Selection"]
 layout_mode = 2
 min_value = 1.0
 value = 1.0
 
-[node name="vframes_select" type="SpinBox" parent="VBoxContainer/HBoxContainer/Frame Selection"]
+[node name="vframes_select" type="SpinBox" parent="MainContainer/HBoxContainer/Frame Selection"]
 layout_mode = 2
 min_value = 1.0
 value = 1.0
 
-[node name="SpriteSheetControls" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="SpriteSheetControls" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="Animations" type="Sprite2D" parent="VBoxContainer/HBoxContainer/SpriteSheetControls"]
-position = Vector2(630, 150)
+[node name="FrameSelection" type="Sprite2D" parent="MainContainer/HBoxContainer/SpriteSheetControls"]
+position = Vector2(496.705, 93)
 texture = ExtResource("2_lmi6c")
-script = ExtResource("3_iqtqf")
+script = ExtResource("3_lun56")
+h = 7
+font = SubResource("SystemFont_bcyo7")
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SpriteSheetControls"]
+[node name="Label" type="Label" parent="MainContainer/HBoxContainer/SpriteSheetControls"]
 layout_mode = 2
 text = "Current Frame"
 
-[node name="frame_select" type="SpinBox" parent="VBoxContainer/HBoxContainer/SpriteSheetControls"]
+[node name="frame_select" type="SpinBox" parent="MainContainer/HBoxContainer/SpriteSheetControls"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MainContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Library Name:  "
+
+[node name="LineEdit" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter Name..."
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 26
 text = "Animation List"
 
-[node name="ItemList" type="ItemList" parent="VBoxContainer/VBoxContainer"]
+[node name="ItemList" type="ItemList" parent="MainContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.15
@@ -106,14 +156,48 @@ size = Vector2i(500, 400)
 ok_button_text = "Open"
 file_mode = 0
 
-[node name="CollisionBox" type="Sprite2D" parent="."]
-position = Vector2(750, 409)
-scale = Vector2(5, 5)
+[node name="ExtraContainer" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 647.0
+offset_bottom = 647.0
 
-[node name="Window" type="Window" parent="."]
+[node name="CanvasBG" type="Sprite2D" parent="ExtraContainer"]
+visible = false
+position = Vector2(570, 328)
+texture = ExtResource("5_42oq3")
+script = ExtResource("6_uoecn")
+
+[node name="EditorCanvas" type="Sprite2D" parent="ExtraContainer/CanvasBG"]
+script = ExtResource("6_2cpr0")
+
+[node name="HSlider" type="HSlider" parent="ExtraContainer"]
+custom_minimum_size = Vector2(169, 0)
+layout_mode = 2
+theme = SubResource("Theme_wcshn")
+min_value = 1.0
+max_value = 5.0
+step = 0.01
+value = 1.0
+
+[node name="SaveEdits" type="Button" parent="ExtraContainer"]
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="ExtraContainer"]
+layout_mode = 2
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="ExtraContainer"]
 initial_position = 2
-size = Vector2i(400, 400)
+size = Vector2i(474, 100)
+dialog_text = "You have unsaved changes. Are you sure you want to exit?"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/DialogButtons/load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/DialogButtons/save" to="VBoxContainer/HBoxContainer/SpriteSheetControls/Animations" method="_on_save_pressed"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="MainContainer/HBoxContainer/DialogButtons/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="MainContainer/HBoxContainer/DialogButtons/save" to="MainContainer/HBoxContainer/DialogButtons/save" method="_on_pressed"]
+[connection signal="id_pressed" from="MainContainer/HBoxContainer/DialogButtons/save/PopupMenu" to="MainContainer/HBoxContainer/SpriteSheetControls/FrameSelection" method="_on_popup_menu_id_pressed"]
+[connection signal="visibility_changed" from="MainContainer/HBoxContainer/SpriteSheetControls/FrameSelection" to="MainContainer/HBoxContainer/SpriteSheetControls/FrameSelection" method="_on_visibility_changed"]
+[connection signal="text_changed" from="MainContainer/VBoxContainer/HBoxContainer/LineEdit" to="MainContainer/HBoxContainer/SpriteSheetControls/FrameSelection" method="_on_line_edit_text_changed"]
+[connection signal="item_activated" from="MainContainer/VBoxContainer/ItemList" to="." method="_on_item_list_item_activated"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="value_changed" from="ExtraContainer/HSlider" to="ExtraContainer/CanvasBG" method="_on_h_slider_value_changed"]
+[connection signal="pressed" from="ExtraContainer/ExitButton" to="." method="_on_exit_button_pressed"]

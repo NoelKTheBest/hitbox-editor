@@ -1,11 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqeceoc7vo1q6"]
+[gd_scene load_steps=7 format=3 uid="uid://bqeceoc7vo1q6"]
 
-[ext_resource type="Texture2D" uid="uid://cv4x4cw1hhyvo" path="res://Platformer Collection/Melee Attack/Attack 2.png" id="1_jq1y7"]
+[ext_resource type="Texture2D" uid="uid://0cnwfusgna42" path="res://Platformer Collection/Melee Attack/Attack 1.png" id="1_y0arc"]
 [ext_resource type="Script" path="res://test4.gd" id="2_v5x3r"]
+[ext_resource type="Animation" uid="uid://dsc3ibvvlfxee" path="res://swipe.res" id="3_60quy"]
+[ext_resource type="Animation" uid="uid://cbregl2768d5" path="res://Anim0.tres" id="3_h3r3g"]
+
+[sub_resource type="Animation" id="Animation_pvhih"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_y0arc")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [15]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2t8c1"]
+_data = {
+"Anim0": ExtResource("3_h3r3g"),
+"RESET": SubResource("Animation_pvhih"),
+"swipe": ExtResource("3_60quy")
+}
 
 [node name="Sprite2D" type="Sprite2D"]
 position = Vector2(97.8, 83.795)
-texture = ExtResource("1_jq1y7")
-hframes = 9
-frame = 3
+texture = ExtResource("1_y0arc")
+hframes = 15
+frame = 7
 script = ExtResource("2_v5x3r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2t8c1")
+}

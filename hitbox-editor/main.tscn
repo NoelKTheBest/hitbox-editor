@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cb7ncvek4444k" path="res://Warrior_Sheet-Effect.png" id="1_wl4l7"]
 [ext_resource type="Script" path="res://test.gd" id="2_jem7c"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="3_4osv5"]
-[ext_resource type="Script" path="res://frame_selection.gd" id="4_qs2d3"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/frame_selection.gd" id="4_qs2d3"]
 
 [sub_resource type="SystemFont" id="SystemFont_5a0ns"]
 font_weight = 800
