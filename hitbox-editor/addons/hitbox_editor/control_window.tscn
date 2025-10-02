@@ -26,7 +26,7 @@ script = ExtResource("1_bxg5m")
 layout_mode = 0
 offset_left = 25.0
 offset_right = 370.0
-offset_bottom = 564.0
+offset_bottom = 473.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
@@ -68,10 +68,12 @@ size = Vector2i(330, 245)
 unresizable = false
 borderless = false
 extend_to_title = true
-item_count = 2
+item_count = 3
 item_0/text = "Save Animation"
 item_1/text = "Save Library"
 item_1/id = 1
+item_2/text = "Save As Scene"
+item_2/id = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
@@ -157,11 +159,13 @@ size = Vector2i(500, 400)
 ok_button_text = "Open"
 file_mode = 0
 
-[node name="ExtraContainer" type="CenterContainer" parent="."]
+[node name="ExtraContainer" type="HBoxContainer" parent="."]
 visible = false
 layout_mode = 0
-offset_right = 647.0
-offset_bottom = 647.0
+offset_left = 1.0
+offset_top = 434.0
+offset_right = 652.0
+offset_bottom = 526.0
 
 [node name="CanvasBG" type="Sprite2D" parent="ExtraContainer"]
 visible = false
@@ -183,9 +187,13 @@ value = 1.0
 
 [node name="SaveEdits" type="Button" parent="ExtraContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
 
 [node name="ExitButton" type="Button" parent="ExtraContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "Exit"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="ExtraContainer"]
 initial_position = 2

@@ -30,7 +30,7 @@ var current_frame_rect : Rect2i
 @onready var anim_list: ItemList = $"../../../VBoxContainer/ItemList"
 @onready var control_window: Control = $"../../../.."
 @onready var main_container: VBoxContainer = $"../../.."
-
+var scene
 
 
 func _ready() -> void:

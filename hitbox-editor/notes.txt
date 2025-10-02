@@ -1,15 +1,15 @@
-We will be creating a new scene with a Sprite2D node,
-an AnimationPlayer, and as many Area2D nodes as the animation
-requires. This will also allow users to copy and paste or
-instantiate these scenes in other scenes. 
+✔️ We will be creating a new scene with a Sprite2D node,
+	an AnimationPlayer, and as many Area2D nodes as the animation
+	requires. This will also allow users to copy and paste or
+	instantiate these scenes in other scenes. 
 
-This method will save settings for only one animation 
-unfortunately. To get around this, I should keep the 
-current/editing scene in memory until I decide to save and
-load a new scene to work with. The extra container will 
-only be open for adding hitboxes to the current
-animation and once it's finished, it will go back to the main
-screen.
+✔️ This method will save settings for only one animation 
+	unfortunately. To get around this, I should keep the 
+	current/editing scene in memory until I decide to save and
+	load a new scene to work with. The extra container will 
+	only be open for adding hitboxes to the current
+	animation and once it's finished, it will go back to the main
+	screen.
 
 In this main screen, I can load and/or select other 
 animations or even an animation library. If I load another
@@ -17,3 +17,38 @@ library, that will effectively be it's own scene. The current
 "*unsaved" library will be part of it's own scene that will 
 keep getting updated with animations that have a hitbox or 
 hurtbox added to them.
+
+I should include some kind of event trigger for when the user
+right clicks on one of the animation library list items so
+that it pops up a panel list window asking if the user wants
+to reorder the animations, delete an animation, or multiple 
+select
+
+as the animation library will be in memory in the editor, 
+it won't be released from memory until the plugin is
+disabled. we should save the scene using resource saver 
+before that point so we don't have to worry about accidentally
+overwriting the scene data. it should be when the user
+is about to load another library. when loading a new lib
+it makes sense to me to just start a new scene as we may 
+want to do different things.
+
+We also need to be aware of wanting to add a lib of anims
+to the current scene. For that we should have a screen before
+that prompts the user to create a scene or to load in a 
+premade scene that includes both a Sprite2D node and an
+AnimationPlayer node. We can get this info with typeof(get_child)
+
+day n+1:
+controlwindow: 
+ - Added a packed scene var
+ - scene is instanced when loading an animlib or an anim
+ - setting frame_selection.animations to animlib of loaded res of type AnimationLibrary in for loop
+ - tested function to get texture property from animation (we will use this to check if the animation is usable for the hitbox editor)
+
+day n+2:
+frame_selection:
+ - added scene var to have a pointer to the instantiated sprite2d node scene
+
+control_window:
+ - made sure the main and extra containers switch visibility when switching from the frame and animation selecting screen to the hitbox editing screen

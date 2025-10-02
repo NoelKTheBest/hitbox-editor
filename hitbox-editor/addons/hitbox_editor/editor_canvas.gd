@@ -1,7 +1,7 @@
 @tool extends Sprite2D
 
 @onready var control_window: Control = $"../../.."
-@onready var extra_container: CenterContainer = $"../.."
+@onready var extra_container: HBoxContainer = $"../.."
 
 
 var hitbox_color = Color(0.98, 0.039, 0.055, 0.5)
