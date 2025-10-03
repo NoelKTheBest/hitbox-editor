@@ -39,6 +39,8 @@ that prompts the user to create a scene or to load in a
 premade scene that includes both a Sprite2D node and an
 AnimationPlayer node. We can get this info with typeof(get_child)
 
+The canvas needs to allow users to define hframes and vframes if they haven't already done so
+
 day n+1:
 controlwindow: 
  - Added a packed scene var
@@ -52,3 +54,7 @@ frame_selection:
 
 control_window:
  - made sure the main and extra containers switch visibility when switching from the frame and animation selecting screen to the hitbox editing screen
+
+day n+3:
+editor_canvas:
+- added hitbox and hurtbox arrays

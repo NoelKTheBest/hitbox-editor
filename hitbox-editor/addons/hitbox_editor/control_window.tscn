@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://dp38xo0la8hm6"]
+[gd_scene load_steps=11 format=3 uid="uid://dp38xo0la8hm6"]
 
 [ext_resource type="Script" path="res://addons/hitbox_editor/control_window.gd" id="1_bxg5m"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/savepopup.gd" id="2_e4lpr"]
 [ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="2_lmi6c"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/frame_selection.gd" id="3_lun56"]
-[ext_resource type="Texture2D" uid="uid://dtoroe0v3nqgi" path="res://icon.svg" id="5_42oq3"]
+[ext_resource type="Texture2D" uid="uid://0cnwfusgna42" path="res://Platformer Collection/Melee Attack/Attack 1.png" id="5_6x4p3"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="6_2cpr0"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/canvas_bg.gd" id="6_uoecn"]
+[ext_resource type="Script" path="res://addons/hitbox_editor/check_button_boxtype.gd" id="8_e7lct"]
 
 [sub_resource type="SystemFont" id="SystemFont_bcyo7"]
 subpixel_positioning = 0
@@ -25,14 +26,14 @@ script = ExtResource("1_bxg5m")
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 25.0
+offset_top = 25.0
 offset_right = 370.0
 offset_bottom = 473.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="DialogButtons" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
+[node name="DialogButtons" type="HBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
@@ -75,50 +76,16 @@ item_1/id = 1
 item_2/text = "Save As Scene"
 item_2/id = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Hframes" type="Label" parent="MainContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-text = "     hframes:"
-
-[node name="Vframes" type="Label" parent="MainContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 2
-text = "     vframes:"
-
-[node name="Frame Selection" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="hframes_select" type="SpinBox" parent="MainContainer/HBoxContainer/Frame Selection"]
-layout_mode = 2
-min_value = 1.0
-value = 1.0
-
-[node name="vframes_select" type="SpinBox" parent="MainContainer/HBoxContainer/Frame Selection"]
-layout_mode = 2
-min_value = 1.0
-value = 1.0
-
 [node name="SpriteSheetControls" type="VBoxContainer" parent="MainContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 
 [node name="FrameSelection" type="Sprite2D" parent="MainContainer/HBoxContainer/SpriteSheetControls"]
-position = Vector2(496.705, 93)
+position = Vector2(686, 110)
 texture = ExtResource("2_lmi6c")
 script = ExtResource("3_lun56")
 h = 7
 font = SubResource("SystemFont_bcyo7")
-
-[node name="Label" type="Label" parent="MainContainer/HBoxContainer/SpriteSheetControls"]
-layout_mode = 2
-text = "Current Frame"
-
-[node name="frame_select" type="SpinBox" parent="MainContainer/HBoxContainer/SpriteSheetControls"]
-layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainContainer"]
 layout_mode = 2
@@ -162,21 +129,27 @@ file_mode = 0
 [node name="ExtraContainer" type="HBoxContainer" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 1.0
+offset_left = 32.0
 offset_top = 434.0
-offset_right = 652.0
-offset_bottom = 526.0
+offset_right = 743.0
+offset_bottom = 535.0
 
 [node name="CanvasBG" type="Sprite2D" parent="ExtraContainer"]
-visible = false
-position = Vector2(570, 328)
-texture = ExtResource("5_42oq3")
+texture_filter = 1
+position = Vector2(391, -258)
+texture = ExtResource("5_6x4p3")
 script = ExtResource("6_uoecn")
+metadata/_edit_group_ = true
 
 [node name="EditorCanvas" type="Sprite2D" parent="ExtraContainer/CanvasBG"]
+texture_filter = 1
+texture = ExtResource("5_6x4p3")
 script = ExtResource("6_2cpr0")
 
-[node name="HSlider" type="HSlider" parent="ExtraContainer"]
+[node name="ScaleAndTypeControls" type="VBoxContainer" parent="ExtraContainer"]
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="ExtraContainer/ScaleAndTypeControls"]
 custom_minimum_size = Vector2(169, 0)
 layout_mode = 2
 theme = SubResource("Theme_wcshn")
@@ -184,6 +157,13 @@ min_value = 1.0
 max_value = 5.0
 step = 0.01
 value = 1.0
+
+[node name="CheckButton" type="CheckButton" parent="ExtraContainer/ScaleAndTypeControls"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Hitboxes"
+script = ExtResource("8_e7lct")
 
 [node name="SaveEdits" type="Button" parent="ExtraContainer"]
 layout_mode = 2
@@ -200,6 +180,53 @@ initial_position = 2
 size = Vector2i(474, 100)
 dialog_text = "You have unsaved changes. Are you sure you want to exit?"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="ExtraContainer"]
+layout_mode = 2
+
+[node name="FrameSelector" type="HBoxContainer" parent="ExtraContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ExtraContainer/VBoxContainer/FrameSelector"]
+layout_mode = 2
+text = "    Current Frame:   "
+
+[node name="frame_select" type="SpinBox" parent="ExtraContainer/VBoxContainer/FrameSelector"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ExtraContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="frame_labels" type="VBoxContainer" parent="ExtraContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+
+[node name="Hframes" type="Label" parent="ExtraContainer/VBoxContainer/HBoxContainer/frame_labels"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "        hframes:"
+
+[node name="Vframes" type="Label" parent="ExtraContainer/VBoxContainer/HBoxContainer/frame_labels"]
+layout_mode = 2
+size_flags_vertical = 2
+text = "        vframes:"
+
+[node name="FrameSelection" type="VBoxContainer" parent="ExtraContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Hframes" type="SpinBox" parent="ExtraContainer/VBoxContainer/HBoxContainer/FrameSelection"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+editable = false
+
+[node name="Vframes" type="SpinBox" parent="ExtraContainer/VBoxContainer/HBoxContainer/FrameSelection"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+editable = false
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="MainContainer/HBoxContainer/DialogButtons/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="MainContainer/HBoxContainer/DialogButtons/save" to="MainContainer/HBoxContainer/DialogButtons/save" method="_on_pressed"]
@@ -208,5 +235,12 @@ dialog_text = "You have unsaved changes. Are you sure you want to exit?"
 [connection signal="text_changed" from="MainContainer/VBoxContainer/HBoxContainer/LineEdit" to="MainContainer/HBoxContainer/SpriteSheetControls/FrameSelection" method="_on_line_edit_text_changed"]
 [connection signal="item_activated" from="MainContainer/VBoxContainer/ItemList" to="." method="_on_item_list_item_activated"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="value_changed" from="ExtraContainer/HSlider" to="ExtraContainer/CanvasBG" method="_on_h_slider_value_changed"]
+[connection signal="texture_changed" from="ExtraContainer/CanvasBG" to="ExtraContainer/CanvasBG" method="_on_texture_changed"]
+[connection signal="frame_changed" from="ExtraContainer/CanvasBG/EditorCanvas" to="ExtraContainer/CanvasBG/EditorCanvas" method="_on_frame_changed"]
+[connection signal="value_changed" from="ExtraContainer/ScaleAndTypeControls/HSlider" to="ExtraContainer/CanvasBG" method="_on_h_slider_value_changed"]
+[connection signal="toggled" from="ExtraContainer/ScaleAndTypeControls/CheckButton" to="ExtraContainer/CanvasBG/EditorCanvas" method="_on_check_button_toggled"]
+[connection signal="toggled" from="ExtraContainer/ScaleAndTypeControls/CheckButton" to="ExtraContainer/ScaleAndTypeControls/CheckButton" method="_on_toggled"]
 [connection signal="pressed" from="ExtraContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="value_changed" from="ExtraContainer/VBoxContainer/FrameSelector/frame_select" to="ExtraContainer/CanvasBG" method="_on_frame_select_value_changed"]
+[connection signal="value_changed" from="ExtraContainer/VBoxContainer/HBoxContainer/FrameSelection/Hframes" to="ExtraContainer/CanvasBG" method="_on_hframes_value_changed"]
+[connection signal="value_changed" from="ExtraContainer/VBoxContainer/HBoxContainer/FrameSelection/Vframes" to="ExtraContainer/CanvasBG" method="_on_vframes_value_changed"]

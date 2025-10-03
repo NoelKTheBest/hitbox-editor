@@ -4,9 +4,16 @@ extends Control
 @onready var file_dialog: FileDialog = $FileDialog
 @onready var item_list: ItemList = $MainContainer/VBoxContainer/ItemList
 @onready var frame_selection: Sprite2D = $MainContainer/HBoxContainer/SpriteSheetControls/FrameSelection
+@onready var editor_canvas: Sprite2D = $ExtraContainer/CanvasBG/EditorCanvas
 @onready var line_edit: LineEdit = $MainContainer/VBoxContainer/HBoxContainer/LineEdit
 @onready var main_container: VBoxContainer = $MainContainer
 @onready var extra_container: HBoxContainer = $ExtraContainer
+
+const TEXTURE_TRACK_PATH = ":texture"
+const HFRAME_TRACK_PATH = ":hframes"
+const VFRAME_TRACK_PATH = ":vframes"
+const FRAME_TRACK_PATH = ":frame"
+const FRAME_COORDS_TRACK_PATH = ":frame_coords"
 
 var animated_character_scene = preload("res://addons/hitbox_editor/sample_scenes/AnimatedCharacter.tscn")
 var animated_scene_instance
@@ -16,7 +23,13 @@ var unsaved_msg = "*Unsaved Library"
 
 
 func _ready() -> void:
-	print(get_tree().current_scene)
+	#print(get_tree().current_scene)
+	frame_selection.tex_path = TEXTURE_TRACK_PATH
+	frame_selection.hf_path = HFRAME_TRACK_PATH
+	frame_selection.vf_path = VFRAME_TRACK_PATH
+	frame_selection.frame_path = FRAME_TRACK_PATH
+	frame_selection.window_is_visible = visible
+	editor_canvas.window_is_visible = visible
 
 
 func _on_load_pressed() -> void:
@@ -54,26 +67,49 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		if child is AnimationPlayer:
 			print_rich("[color=orange]AnimationPlayer")
 	
-	print(animated_scene_instance.get_path_to(animated_scene_instance.get_child(1)))
+	#print(animated_scene_instance.get_path_to(animated_scene_instance.get_child(1)))
 
 
 func _on_visibility_changed() -> void:
-	pass
+	if frame_selection: frame_selection.window_is_visible = visible
+	if editor_canvas: editor_canvas.window_is_visible = visible
 
 
 func _on_item_list_item_activated(index: int) -> void:
 	# Make main container invisible and make extra/ container visible
 	var anim = frame_selection.animations[index]
-	print(frame_selection.animations[index])
-	if anim.find_track("Sprite2D:texture", Animation.TYPE_VALUE) == -1:
+	var texture_track = anim.find_track(TEXTURE_TRACK_PATH, Animation.TYPE_VALUE)
+	var frame_track = anim.find_track(FRAME_TRACK_PATH, Animation.TYPE_VALUE)
+	var hf_track = anim.find_track(HFRAME_TRACK_PATH, Animation.TYPE_VALUE)
+	var vf_track = anim.find_track(VFRAME_TRACK_PATH, Animation.TYPE_VALUE)
+	if texture_track == -1:
 		print_rich("[color=yellow]This animation does not have a texture property")
 	else: 
-		print("Found texture property")
+		#print("Found texture property")
+		var canvas = $ExtraContainer/CanvasBG
+		var frame_spin_box = $ExtraContainer/VBoxContainer/FrameSelector/frame_select
+		var frame_count = anim.track_get_key_count(frame_track)
+		canvas.hframes = anim.track_get_key_value(hf_track, 0)
+		canvas.vframes = anim.track_get_key_value(vf_track, 0)
+		canvas.frame = anim.track_get_key_value(frame_track, 0)
+		canvas.last_frame = canvas.frame + (frame_count - 1)
+		canvas.texture = anim.track_get_key_value(texture_track, 0)
+		frame_spin_box.min_value = canvas.frame
+		frame_spin_box.max_value = canvas.last_frame
+		#if hf_track != -1:
+		#	$ExtraContainer/VBoxContainer/HBoxContainer/FrameSelection/Hframes.editable
+		#if vf_track != -1:
+		#	$ExtraContainer/VBoxContainer/HBoxContainer/FrameSelection/Vframes.editable
+		
 		main_container.visible = false
+		frame_selection.visible = false
 		extra_container.visible = true
+		editor_canvas.visible = true
 
 
 func _on_exit_button_pressed() -> void:
 	# Make extra container invisible and make main container visible
 	extra_container.visible = false
+	editor_canvas.visible = false
 	main_container.visible = true
+	frame_selection.visible = true

@@ -28,9 +28,13 @@ var anim_lib_name : String
 var current_frame_rect : Rect2i
 #@onready var parent: Sprite2D = $".."
 @onready var anim_list: ItemList = $"../../../VBoxContainer/ItemList"
-@onready var control_window: Control = $"../../../.."
-@onready var main_container: VBoxContainer = $"../../.."
+
 var scene
+var tex_path
+var hf_path
+var vf_path
+var frame_path
+var window_is_visible
 
 
 func _ready() -> void:
@@ -64,7 +68,9 @@ func _set_vframes(vf: int):
 
 
 func _input(event):
-	if control_window.visible and main_container.visible:
+	# The visibility of this script is not changed by control_window if 
+	#	the scene begins with extra_container being visible
+	if window_is_visible and visible:
 		if event is InputEventMouseMotion:
 			for area in frame_rects:
 				if area.has_point(to_local(event.position)):

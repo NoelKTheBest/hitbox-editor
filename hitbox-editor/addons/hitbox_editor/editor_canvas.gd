@@ -3,11 +3,25 @@
 @onready var control_window: Control = $"../../.."
 @onready var extra_container: HBoxContainer = $"../.."
 
+class BoxArea:
+	var index : int
+	var properties : PerFrameProperties
+
+class PerFrameProperties:
+	var rects = []
+	var box_active_on_frames = []
+	var frame_numbers = []
 
 var hitbox_color = Color(0.98, 0.039, 0.055, 0.5)
 var hurtbox_color = Color(0.204, 0.761, 0.188, 0.5)
+var current_color = Color(0.98, 0.039, 0.055, 0.5)
+var is_curr_type_hurt = false
 var drawing_rect : Rect2i
-var boxes = []
+var hitboxes = []
+var hurtboxes = []
+var window_is_visible
+var frame_count
+var frame_number_map = []
 
 enum drag_modes {PAN, CREATE}
 
@@ -18,13 +32,17 @@ var start_pos : Vector2i
 var end_pos : Vector2i
 
 func _draw():
-	draw_rect(drawing_rect, hitbox_color)
-	for box in boxes:
-		draw_rect(box, hitbox_color)
+	draw_rect(drawing_rect, current_color)
+	for hitbox in hitboxes:
+		#draw_rect(hitbox.properties.rects[frame], hitbox_color)
+		pass
+	for hurtbox in hurtboxes:
+		#draw_rect(hurtbox.rect, hurtbox_color)
+		pass
 
 
 func _input(event):
-	if control_window.visible and extra_container.visible:
+	if window_is_visible and visible:
 		var box_pos : Vector2i
 		# we will have an array of boxes to use and 
 		#	we check every frame to see if each of these boxes 
@@ -32,33 +50,9 @@ func _input(event):
 		var current_box_id : int
 		var current_box_pos : Vector2i
 		
-		#print(event)
-		
-		if event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
-			if get_rect().has_point(to_local(event.position)) and !drag_box:
-				var local_event_position = to_local(event.position)
-				
-				# Applying Scaling to the transform itself works in scaling properly.
-				#	But we still have a few issues:
-				#		We can make the scale only work in the sprite rect but that rect changes with the sprite's rect. The sprite itself needs
-				#		to conform to the rect of it's parent for it to work. Effectively the parent node must be a background node of equal size
-				#		and position to it's child so that it can be used to clip the child and be used for scaling only within the parent's rect.
-				#		
-				#		I need to make sure that the structure of the scene is finalized so that it works in the editor flawlessly.
-				#		Also the plugin needs to open in a separate window
-				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-					#apply_scale(Vector2(scale.x * 1.02, scale.y * 1.02))
-					transform.x = transform.x * 1.02
-					transform.y = transform.y * 1.02
-					pass
-				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-					transform.x = transform.x * 0.98
-					transform.y = transform.y * 0.98
-					pass
-		
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			#if Rect2(0, 0, 30, 20).has_point(to_local((event.position))):
 			#	drag_box = true
+			search_boxes()
 			if get_rect().has_point(to_local(event.position)) and !drag_box:
 				var local_event_position = to_local(event.position)
 				if !dragging:
@@ -70,13 +64,16 @@ func _input(event):
 					#print(drawing_rect)
 		
 		if event is InputEventMouseButton and !event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			#if Rect2(0, 0, 30, 20).has_point(to_local((event.position))):
 			#	drag_box = false
 			if get_rect().has_point(to_local(event.position)) and !drag_box:
 				var local_event_position = to_local(event.position)
 				dragging = false
 				end_pos = local_event_position
-				boxes.append(drawing_rect)
+				
+				# Create a new BoxArea and set properties. Add to appropriate array
+				define_box()
+				
+				# Define new area to add to the scene
 				var new_area : Area2D = Area2D.new()
 				var shape : CollisionShape2D = CollisionShape2D.new()
 				var rect_shape = RectangleShape2D.new()
@@ -99,15 +96,22 @@ func _input(event):
 				#var rectpos = to_global(drawing_rect.position)
 				var halfsize = Vector2i(drawing_rect.size.x / 2, drawing_rect.size.y / 2)
 				new_area.position = drawing_rect.position + (halfsize)
+				
+				# If either the x or y vars of the rect size is negative, 
+				#	subtract the position of the corresponding axis
 				if negx: new_area.position.x -= drawing_rect.size.x
 				if negy: new_area.position.y -= drawing_rect.size.y
 				var modx = drawing_rect.size.x % 2
 				var mody = drawing_rect.size.y % 2
+				
+				# Add 0.5 to the position (if needed) to make it line up exactly with the drawn rect
 				new_area.position.x += modx / 2.0
 				new_area.position.y += mody / 2.0
-				print("size: ", drawing_rect.size)
-				print("dpos: ", drawing_rect.position, " npos: ",drawing_rect.position + (halfsize))
+				#print("size: ", drawing_rect.size)
+				#print("dpos: ", drawing_rect.position, " npos: ",drawing_rect.position + (halfsize))
+				
 		
+		# If we are currently drawing a box, check for MouseMotion instead of MouseButton
 		if dragging and event is InputEventMouseMotion:
 			var local_event_position = to_local(event.position)
 			end_pos = local_event_position
@@ -115,6 +119,50 @@ func _input(event):
 			#print(drawing_rect)
 			queue_redraw()
 
-class BoxArea:
-	var rect : Rect2i
-	var active : bool
+
+func search_boxes():
+	#create a for loop to search through all hitboxes and hurtboxes to see if one if a target for
+	#	translation
+	for hitbox in hitboxes:
+		pass
+
+
+# Define a box in a specific frame. Copy contents of frame properties to a new frame when switching
+func define_box():
+	# Create a new BoxArea with new PerFrameProperties
+	var new_box = BoxArea.new()
+	
+	# I am thinking of using this to know when to add another Area2D node to the 
+	#	instantiated scene in ControlWindow
+	new_box.index = 0
+	
+	# Later we need to check if the properties class already has these vars defined
+	new_box.properties = PerFrameProperties.new()
+	new_box.properties.rects.resize(frame_count)
+	new_box.properties.box_active_on_frames.resize(frame_count)
+	#new_box.properties.frame_numbers.resize(frame_count)
+	var i = frame_number_map.find(frame)
+	new_box.properties.rects[i] = drawing_rect
+	
+	if is_curr_type_hurt: hurtboxes.append(new_box)
+	else: hitboxes.append(new_box)
+
+
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	is_curr_type_hurt = toggled_on
+	if toggled_on: current_color = hurtbox_color
+	else: current_color = hitbox_color
+
+
+# Use this function to check if in the previous frame, 
+#	there are any properties that can be copied. If so,
+#	copy those properties.
+#
+#	We can also use this function to set and change certain
+#	controls in the editor window such as the control that
+#	will show the current box that is selected (which also
+#	will indicate that the box can be moved and that we are
+#	not currently dragging anything), it's type and wether 
+#	it is active in the current frame
+func _on_frame_changed() -> void:
+	pass
