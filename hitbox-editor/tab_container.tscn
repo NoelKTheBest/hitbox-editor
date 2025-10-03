@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwp8hnp7v0cvw"]
+
+[ext_resource type="PackedScene" uid="uid://ctt8uoj12hlho" path="res://addons/hitbox_editor/box_info_panel.tscn" id="1_tuv4k"]
+
+[node name="TabContainer" type="TabContainer"]
+offset_right = 395.0
+offset_bottom = 31.0
+current_tab = 1
+clip_tabs = false
+
+[node name="BoxInfoPanel" parent="." instance=ExtResource("1_tuv4k")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="BoxInfoPanel2" parent="." instance=ExtResource("1_tuv4k")]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="ColorRect" parent="BoxInfoPanel2/VBoxContainer" index="2"]
+color = Color(0.0324, 0.81, 0.05832, 1)
+
+[node name="BoxInfoPanel3" parent="." instance=ExtResource("1_tuv4k")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[editable path="BoxInfoPanel2"]
