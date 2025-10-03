@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bt4232u1rcll6"]
+[gd_scene load_steps=8 format=3 uid="uid://bt4232u1rcll6"]
 
 [ext_resource type="Texture2D" uid="uid://dkmwvfbgww01e" path="res://Sprites/ATTACK 1.png" id="1_pu8rq"]
 [ext_resource type="Texture2D" uid="uid://cb7ncvek4444k" path="res://Warrior_Sheet-Effect.png" id="1_wl4l7"]
-[ext_resource type="Script" path="res://test.gd" id="2_jem7c"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/editor_canvas.gd" id="3_4osv5"]
 [ext_resource type="Script" path="res://addons/hitbox_editor/frame_selection.gd" id="4_qs2d3"]
 
@@ -43,7 +42,6 @@ scale = Vector2(4.54, 4.545)
 texture = ExtResource("1_pu8rq")
 hframes = 7
 frame = 4
-script = ExtResource("2_jem7c")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 texture = ExtResource("1_pu8rq")
