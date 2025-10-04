@@ -129,23 +129,33 @@ func search_boxes():
 
 # Define a box in a specific frame. Copy contents of frame properties to a new frame when switching
 func define_box():
+	print(get_rect())
 	# Create a new BoxArea with new PerFrameProperties
 	var new_box = BoxArea.new()
 	
 	# I am thinking of using this to know when to add another Area2D node to the 
 	#	instantiated scene in ControlWindow
-	new_box.index = 0
+	#new_box.index = 0
 	
-	# Later we need to check if the properties class already has these vars defined
+	# Check if the properties class already has these vars defined
 	new_box.properties = PerFrameProperties.new()
 	new_box.properties.rects.resize(frame_count)
 	new_box.properties.box_active_on_frames.resize(frame_count)
 	#new_box.properties.frame_numbers.resize(frame_count)
 	var i = frame_number_map.find(frame)
-	new_box.properties.rects[i] = drawing_rect
+	new_box.properties.rects.fill(drawing_rect)
 	
-	if is_curr_type_hurt: hurtboxes.append(new_box)
-	else: hitboxes.append(new_box)
+	if is_curr_type_hurt: 
+		new_box.index = hurtboxes.size()
+		hurtboxes.append(new_box)
+	else:
+		new_box.index = hitboxes.size()
+		hitboxes.append(new_box)
+
+
+func copy_in_frame(box: BoxArea):
+	var i = frame_number_map.find(frame)
+	box.properties.rects
 
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
@@ -165,4 +175,8 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 #	not currently dragging anything), it's type and wether 
 #	it is active in the current frame
 func _on_frame_changed() -> void:
-	pass
+	for hitbox in hitboxes:
+		#copy_in_frame(hitbox)
+		pass
+	
+	

@@ -1,26 +1,39 @@
-[gd_scene format=3 uid="uid://ctt8uoj12hlho"]
+[gd_scene load_steps=3 format=3 uid="uid://ctt8uoj12hlho"]
+
+[ext_resource type="Script" path="res://addons/hitbox_editor/box_info_panel.gd" id="1_eeddo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_naaaw"]
+bg_color = Color(0.09, 0.09, 0.09, 1)
+border_width_left = 4
+border_width_right = 4
+border_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="BoxInfoPanel" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -987.0
-offset_bottom = -515.0
+offset_right = -862.0
+offset_bottom = -378.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_eeddo")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 164.0
-offset_bottom = 133.0
+offset_right = 291.0
+offset_bottom = 290.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 157.0
-offset_bottom = 126.0
+offset_left = 26.0
+offset_top = 16.0
+offset_right = 180.0
+offset_bottom = 135.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -31,15 +44,11 @@ text = "Type:"
 
 [node name="BoxType" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_naaaw")
 text = "Hitbox"
 
-[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer/BoxType"]
-show_behind_parent = true
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_left = -2.0
-offset_right = 54.0
-offset_bottom = 23.0
-size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -59,7 +68,73 @@ layout_mode = 2
 layout_mode = 2
 text = "Active"
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 2
+offset_left = 26.0
+offset_top = 80.0
+offset_right = 180.0
+offset_bottom = 136.0
 size_flags_vertical = 3
 color = Color(0.81, 0.0324, 0.0324, 1)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 143.0
+offset_right = 265.0
+offset_bottom = 271.0
+
+[node name="Label" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Position"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "x:"
+
+[node name="PosX" type="SpinBox" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+suffix = "px"
+
+[node name="Label2" type="Label" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "y:"
+
+[node name="PosY" type="SpinBox" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+suffix = "px"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Size
+"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "x:"
+
+[node name="SizeX" type="SpinBox" parent="VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "y:"
+
+[node name="SizeY" type="SpinBox" parent="VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer2/ActiveCheckbox" to="." method="_on_active_checkbox_toggled"]
+[connection signal="value_changed" from="VBoxContainer2/HBoxContainer/PosX" to="." method="_on_pos_x_value_changed"]
+[connection signal="value_changed" from="VBoxContainer2/HBoxContainer/PosY" to="." method="_on_pos_y_value_changed"]
+[connection signal="value_changed" from="VBoxContainer2/HBoxContainer2/SizeX" to="." method="_on_size_x_value_changed"]
+[connection signal="value_changed" from="VBoxContainer2/HBoxContainer2/SizeY" to="." method="_on_size_y_value_changed"]

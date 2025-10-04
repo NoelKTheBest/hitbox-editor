@@ -39,7 +39,7 @@ that prompts the user to create a scene or to load in a
 premade scene that includes both a Sprite2D node and an
 AnimationPlayer node. We can get this info with typeof(get_child)
 
-The canvas needs to allow users to define hframes and vframes if they haven't already done so
+✔️ The canvas needs to allow users to define hframes and vframes if they haven't already done so
 
 day n+1:
 controlwindow: 

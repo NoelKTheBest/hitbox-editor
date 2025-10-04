@@ -17,6 +17,12 @@ metadata/_tab_index = 0
 layout_mode = 2
 metadata/_tab_index = 1
 
+[node name="BoxType" parent="BoxInfoPanel2/VBoxContainer/HBoxContainer" index="1"]
+text = "Hurtbox"
+
+[node name="Panel" parent="BoxInfoPanel2/VBoxContainer/HBoxContainer/BoxType" index="0"]
+offset_right = 67.0
+
 [node name="ColorRect" parent="BoxInfoPanel2/VBoxContainer" index="2"]
 color = Color(0.0324, 0.81, 0.05832, 1)
 
